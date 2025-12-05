@@ -41,10 +41,10 @@ function HomeScren(props: any) {
 
             <View style={styles.buttonContainer}>
 
-                <TouchableOpacity style={styles.ButtonSC} onPress={() => props.navigation.navigate("Index")}>
+                <TouchableOpacity style={styles.ButtonSC} onPress={() => props.navigation.navigate("LoginScreen")}>
                     <Text style={styles.TextSC}>Se connecter</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.ButtonCM}>
+                <TouchableOpacity style={styles.ButtonCM} onPress={() => props.navigation.navigate("CreerCompt")}>
                     <Text style={styles.TextCM}>Créer un compte</Text>
                 </TouchableOpacity>
             </View>
