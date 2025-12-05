@@ -9,7 +9,7 @@ import {
     Platform
 } from 'react-native';
 
-const SignupScreen = () => {
+const SignupScreen = (props: any) => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
