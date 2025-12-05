@@ -1,153 +1,158 @@
-import React, { useState } from "react";
+import React from 'react';
 import {
     View,
     Text,
     TextInput,
-    TouchableOpacity,
     StyleSheet,
+    TouchableOpacity,
     ScrollView,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Ionicons from 'react-native-vector-icons/Ionicons';
+    Platform
+} from 'react-native';
 
-export default function SignupScreen({ navigation }: any) {
-    const [showPassword, setShowPassword] = useState(false);
-
+const SignupScreen = () => {
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.backArrow}>{'<'}</Text>
+                <Text style={styles.appTitle}>Agadir Task Manager 2025</Text>
+            </View>
 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-                    <Ionicons name="arrow-back" size={22} color="#000" />
-                    <Text style={styles.headerText}>Agadir Task Manager 2025</Text>
-                </TouchableOpacity>
+            <Text style={styles.mainHeading}>Créez votre compte</Text>
 
-                <Text style={styles.title}>Créez votre compte</Text>
-
-                <View style={styles.fieldContainer}>
+            <View style={styles.form}>
+                <View style={styles.formGroup}>
                     <Text style={styles.label}>Nom complet</Text>
                     <TextInput
-                        placeholder="Entrez votre nom complet"
                         style={styles.input}
-                        placeholderTextColor="#999"
+                        placeholder="Entrez votre nom complet"
                     />
                 </View>
 
-                <View style={styles.fieldContainer}>
+                <View style={styles.formGroup}>
                     <Text style={styles.label}>Email</Text>
                     <TextInput
-                        placeholder="Entrez votre adresse email"
                         style={styles.input}
+                        placeholder="Entrez votre adresse email"
                         keyboardType="email-address"
-                        placeholderTextColor="#999"
                     />
                 </View>
 
-                <View style={styles.fieldContainer}>
+                <View style={styles.formGroup}>
                     <Text style={styles.label}>Mot de passe</Text>
-                    <View style={styles.passwordContainer}>
+                    <View style={styles.passwordField}>
                         <TextInput
+                            style={styles.input}
                             placeholder="Créez un mot de passe"
-                            style={styles.passwordInput}
-                            secureTextEntry={!showPassword}
-                            placeholderTextColor="#999"
+                            secureTextEntry={true}
                         />
-                        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                            <Ionicons
-                                name={showPassword ? "eye-off" : "eye"}
-                                size={20}
-                                color="#777"
-                            />
+                        <TouchableOpacity style={styles.passwordToggle}>
+                            <Text style={{ fontSize: 18 }}>&#128065;</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
 
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.btnText}>Créer un compte</Text>
+                <TouchableOpacity style={styles.createAccountBtn}>
+                    <Text style={styles.buttonText}>Créer un compte</Text>
                 </TouchableOpacity>
+            </View>
 
-                <View style={styles.footer}>
-                    <Text>Vous avez déjà un compte? </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-                        <Text style={styles.loginText}>Se connecter</Text>
-                    </TouchableOpacity>
-                </View>
-
-            </ScrollView>
-        </SafeAreaView>
+            <View style={styles.loginPrompt}>
+                <Text style={styles.promptText}>Vous avez déjà un compte? </Text>
+                <TouchableOpacity onPress={() => console.log('Se connecter clicked')}>
+                    <Text style={styles.loginLink}>Se connecter</Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView>
     );
-
-}
+};
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        backgroundColor: '#FCF8F3',
         paddingHorizontal: 20,
-        paddingTop: 10,
+        paddingTop: 50,
     },
-    backBtn: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 8,
-        marginBottom: 20,
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 40,
     },
-    headerText: {
-        fontSize: 14,
-        fontWeight: "600",
-    },
-    title: {
+    backArrow: {
         fontSize: 24,
-        fontWeight: "700",
+        fontWeight: 'bold',
+        color: '#333',
+        marginRight: 15,
+    },
+    appTitle: {
+        fontSize: 20,
+        color: '#555',
+        fontWeight: "bold"
+    },
+    mainHeading: {
+        fontSize: 30,
+        fontWeight: '700',
+        color: '#333',
+        marginBottom: 40,
+    },
+    formGroup: {
         marginBottom: 25,
     },
-    fieldContainer: {
-        marginBottom: 18,
-    },
     label: {
-        fontSize: 14,
-        fontWeight: "600",
-        marginBottom: 6,
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#333',
+        marginBottom: 8,
     },
     input: {
-        height: 45,
+        height: 50,
+        borderColor: '#e0e0e0',
         borderWidth: 1,
-        borderColor: "#ddd",
-        borderRadius: 8,
-        paddingHorizontal: 12,
-        fontSize: 15,
-    },
-    passwordContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        height: 45,
-        borderWidth: 1,
-        borderColor: "#ddd",
-        borderRadius: 8,
-        paddingHorizontal: 12,
-        justifyContent: "space-between",
-    },
-    passwordInput: {
-        flex: 1,
-        fontSize: 15,
-    },
-    button: {
-        backgroundColor: "#006FBF",
-        paddingVertical: 14,
         borderRadius: 10,
-        marginTop: 10,
-        alignItems: "center",
-    },
-    btnText: {
-        color: "#fff",
+        paddingHorizontal: 15,
         fontSize: 16,
-        fontWeight: "600",
+        flex: 1,
     },
-    footer: {
-        flexDirection: "row",
-        justifyContent: "center",
-        marginTop: 15,
+    passwordField: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: 'relative',
     },
-    loginText: {
-        color: "#006FBF",
-        fontWeight: "700",
+    passwordToggle: {
+        position: 'absolute',
+        right: 15,
+        padding: 5,
     },
+    createAccountBtn: {
+        backgroundColor: '#007bff',
+        padding: 15,
+        borderRadius: 12,
+        alignItems: 'center',
+        marginTop: 40,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: '600',
+    },
+    loginPrompt: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 20,
+        marginBottom: 50,
+    },
+    promptText: {
+        fontSize: 16,
+        color: '#666',
+    },
+    loginLink: {
+        color: '#007bff',
+        fontWeight: '600',
+        fontSize: 16,
+    },
+    form: {
+
+    }
 });
+
+export default SignupScreen;

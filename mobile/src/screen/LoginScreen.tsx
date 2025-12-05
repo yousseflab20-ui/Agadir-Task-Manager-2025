@@ -4,7 +4,6 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    Image,
     StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,60 +14,47 @@ export default function LoginScreen({ navigation }: any) {
     return (
         <SafeAreaView style={styles.container}>
 
-            <View style={styles.logoContainer}>
-                {/* <Image
-                    source={require("../assets/image/logo.png")}
-                    style={styles.logo}
-                /> */}
-            </View>
+            {/* CENTERED CONTENT */}
+            <View style={styles.centerContent}>
 
-            <Text style={styles.title}>Welcome Back!</Text>
-            <Text style={styles.subtitle}>
-                Log in to manage your tasks in Agadir.
-            </Text>
+                <Text style={styles.title}>Welcome Back!</Text>
 
-            <View style={styles.inputContainer}>
-                {/* <Image
-                    source={require("../assets/icons/email.png")}
-                    style={styles.icon}
-                /> */}
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your email"
-                    placeholderTextColor="#999"
-                />
-            </View>
+                <Text style={styles.subtitle}>
+                    Log in to manage your tasks in Agadir.
+                </Text>
 
-            <View style={styles.inputContainer}>
-                {/* <Image
-                    source={require("../assets/icons/lock.png")}
-                    style={styles.icon}
-                /> */}
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your password"
-                    secureTextEntry={!passwordVisible}
-                    placeholderTextColor="#999"
-                />
-                <TouchableOpacity
-                    onPress={() => setPasswordVisible(!passwordVisible)}
-                >
-                    {/* <Image
-                        source={require("../assets/icons/eye.png")}
-                        style={styles.eyeIcon}
-                    /> */}
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter your email"
+                        placeholderTextColor="#999"
+                    />
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter your password"
+                        secureTextEntry={!passwordVisible}
+                        placeholderTextColor="#999"
+                    />
+                    <TouchableOpacity
+                        onPress={() => setPasswordVisible(!passwordVisible)}
+                    >
+                    </TouchableOpacity>
+                </View>
+
+                <TouchableOpacity style={styles.button}>
+                    <Text style={styles.buttonText}>Se connecter</Text>
                 </TouchableOpacity>
-            </View>
 
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Se connecter</Text>
-            </TouchableOpacity>
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}>Pas encore de compte ? </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+                        <Text style={styles.footerLink}>Créer un compte</Text>
+                    </TouchableOpacity>
+                </View>
 
-            <View style={styles.footer}>
-                <Text style={styles.footerText}>Pas encore de compte ? </Text>
-                <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-                    <Text style={styles.footerLink}>Créer un compte</Text>
-                </TouchableOpacity>
             </View>
 
         </SafeAreaView>
@@ -81,16 +67,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#FCF8F3",
         paddingHorizontal: 25,
     },
-    logoContainer: {
-        alignItems: "center",
-        marginTop: 40,
-        marginBottom: 20,
+
+    // EVERYTHING CENTERED
+    centerContent: {
+        flex: 1,
+        justifyContent: "center",
     },
-    logo: {
-        width: 70,
-        height: 70,
-        resizeMode: "contain",
-    },
+
     title: {
         fontSize: 26,
         fontWeight: "bold",
@@ -113,21 +96,12 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         elevation: 3,
     },
-    icon: {
-        width: 20,
-        height: 20,
-        tintColor: "#999",
-    },
+
     input: {
         flex: 1,
         marginLeft: 10,
         fontSize: 14,
         color: "#333",
-    },
-    eyeIcon: {
-        width: 20,
-        height: 20,
-        tintColor: "#999",
     },
 
     button: {
