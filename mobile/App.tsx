@@ -1,6 +1,6 @@
-import HomeScreen from "./app/screen/HomeScreen";
-import LoginScreen from "./app/screen/LoginScreen";
-import CreerCompt from "./app/screen/CreerCompt"
+import HomeScreen from "./src/screen/HomeScreen"
+import LoginScreen from "./src/screen/LoginScreen"
+import CreerCompt from "./src/screen/CreerCompt"
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 

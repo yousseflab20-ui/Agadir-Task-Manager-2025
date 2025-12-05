@@ -12,27 +12,31 @@ import {
     Text,
     Dimensions,
     Platform,
-    Button,
     Image,
     TouchableOpacity
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Badge } from '../assets';
 
 const windowHeight = Dimensions.get('window').height;
 
+const BadgeImage = Image.resolveAssetSource(Badge).uri;
+
 function HomeScren(props: any) {
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: '#FCF8F3' }]}>
+        <SafeAreaView style={[styles.container, {
+            backgroundColor: '#FCF8F3',
+        }]}>
             <StatusBar hidden={true} />
 
             <View style={styles.centerContent}>
                 <View style={styles.iconContainer}>
 
-                    {/* <Image
-                        source={require("./assets/téléchargement (3).jpeg")}
-                    /> */}
+                    <Image
+                        source={{ uri: BadgeImage }}
+                        style={styles.checkIcon}
+                    />
                 </View>
-
                 <Text style={styles.title}>Agadir Task Manager</Text>
                 <Text style={styles.subtitle}>
                     Gérez vos tâches quotidiennes, avec simplicité.
