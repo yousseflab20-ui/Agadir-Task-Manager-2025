@@ -34,7 +34,7 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      <Text>Hello World</Text>
+      <Text>salam</Text>
     </View>
   );
 }
