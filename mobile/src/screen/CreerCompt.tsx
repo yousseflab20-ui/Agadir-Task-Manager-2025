@@ -8,13 +8,16 @@ import {
     ScrollView,
     Platform
 } from 'react-native';
-
 const SignupScreen = (props: any) => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
+                {/* <RollerCoaster
+                    size={96}
+                    absoluteStrokeWidth={true}
+                /> */}
                 <Text style={styles.backArrow}>{'<'}</Text>
-                <Text style={styles.appTitle}>Agadir Task Manager 2025</Text>
+                <Text style={styles.appTitle} onPress={() => props.navigation.navigate("LoginScreen")}>Agadir Task Manager 2025</Text>
             </View>
 
             <Text style={styles.mainHeading}>Créez votre compte</Text>
@@ -59,7 +62,7 @@ const SignupScreen = (props: any) => {
             <View style={styles.loginPrompt}>
                 <Text style={styles.promptText}>Vous avez déjà un compte? </Text>
                 <TouchableOpacity onPress={() => console.log('Se connecter clicked')}>
-                    <Text style={styles.loginLink}>Se connecter</Text>
+                    <Text style={styles.loginLink} onPress={() => props.navigation.navigate("LoginScreen")}>Se connecter</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

@@ -44,7 +44,7 @@ export default function LoginScreen({ navigation }: any) {
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("TaskList")}>
                     <Text style={styles.buttonText}>Se connecter</Text>
                 </TouchableOpacity>
 
@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25,
     },
 
-    // EVERYTHING CENTERED
     centerContent: {
         flex: 1,
         justifyContent: "center",
