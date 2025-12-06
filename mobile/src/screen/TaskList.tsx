@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, StatusBar, TouchableOpacity } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { List, Bell, Plus, Bold, BoldIcon } from 'lucide-react-native';
 
-const TaskList = () => {
+const TaskList = (props: any) => {
     const [activeTab, setActiveTab] = useState(1);
 
     const tabs = [
@@ -13,17 +12,20 @@ const TaskList = () => {
     ];
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             {/* HEADER */}
             <View style={styles.header}>
                 <TouchableOpacity style={styles.iconButton}>
-                    <Ionicons name="menu" size={24} color="#333" />
+                    <List
+                        size={28}
+                        color={"#000"}
+                    />
                 </TouchableOpacity>
 
                 <Text style={styles.headerTitle}>Mes Tâches</Text>
 
                 <TouchableOpacity style={styles.iconButton}>
-                    <Ionicons name="notifications-outline" size={24} color="#333" />
+                    <Bell color="#000" size={28} />
                 </TouchableOpacity>
             </View>
 
@@ -64,7 +66,12 @@ const TaskList = () => {
                     </Text>
                 </View>
             </View>
-        </SafeAreaView>
+            <View style={styles.containerIcone}>
+                <View style={styles.ContainerIcone}>
+                    <Plus size={40} color={"#fff"} onPress={() => (props.navigation.navigate("NewTask"))} />
+                </View>
+            </View>
+        </View>
     );
 };
 
@@ -87,6 +94,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.05,
         shadowRadius: 3,
         elevation: 2,
+        paddingTop: 30
     },
     iconButton: {
         width: 40,
@@ -162,5 +170,17 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: "#999",
         marginTop: 8,
+    },
+    containerIcone: {
+        flex: 1,
+        justifyContent: "flex-end",
+        alignItems: "flex-end",
+        padding: 20,
+        marginBottom: 40
+    },
+    ContainerIcone: {
+        backgroundColor: "#2200ffff",
+        padding: 10,
+        borderRadius: 50,
     },
 });

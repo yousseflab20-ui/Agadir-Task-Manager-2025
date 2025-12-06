@@ -8,16 +8,13 @@ import {
     ScrollView,
     Platform
 } from 'react-native';
+import { Eye, ArrowBigLeft } from "lucide-react-native"
 const SignupScreen = (props: any) => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
-                {/* <RollerCoaster
-                    size={96}
-                    absoluteStrokeWidth={true}
-                /> */}
-                <Text style={styles.backArrow}>{'<'}</Text>
-                <Text style={styles.appTitle} onPress={() => props.navigation.navigate("LoginScreen")}>Agadir Task Manager 2025</Text>
+                <ArrowBigLeft size={34} onPress={() => props.navigation.navigate("LoginScreen")} />
+                <Text style={styles.appTitle}>Agadir Task Manager 2025</Text>
             </View>
 
             <Text style={styles.mainHeading}>Créez votre compte</Text>
@@ -49,7 +46,7 @@ const SignupScreen = (props: any) => {
                             secureTextEntry={true}
                         />
                         <TouchableOpacity style={styles.passwordToggle}>
-                            <Text style={{ fontSize: 18 }}>&#128065;</Text>
+                            <Eye />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -74,7 +71,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FCF8F3',
         paddingHorizontal: 20,
-        paddingTop: 50,
+        paddingTop: 100,
     },
     header: {
         flexDirection: 'row',
@@ -127,7 +124,7 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     createAccountBtn: {
-        backgroundColor: '#007bff',
+        backgroundColor: '#0077B6',
         padding: 15,
         borderRadius: 12,
         alignItems: 'center',
@@ -149,7 +146,7 @@ const styles = StyleSheet.create({
         color: '#666',
     },
     loginLink: {
-        color: '#007bff',
+        color: '#0077B6',
         fontWeight: '600',
         fontSize: 16,
     },
