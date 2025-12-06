@@ -10,27 +10,16 @@ function App() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <NavigationContainer >
+      <Stack.Navigator initialRouteName="HomeScreen" >
+        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="CreerCompt" component={CreerCompt} options={{ headerShown: false }} />
+        <Stack.Screen name="TaskList" component={TaskList} options={{ headerShown: false }} />
+        <Stack.Screen name="NewTask" component={NewTask} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <Text>Hello World</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;
