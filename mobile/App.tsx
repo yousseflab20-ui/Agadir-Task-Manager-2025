@@ -1,25 +1,13 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import { NewAppScreen } from '@react-native/new-app-screen';
-import {
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import HomeScreen from "./src/screen/HomeScreen"
+import LoginScreen from "./src/screen/LoginScreen"
+import CreerCompt from "./src/screen/CreerCompt"
+import TaskList from "./src/screen/TaskList"
+import NewTask from "./src/screen/NewTask"
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const Stack = createNativeStackNavigator();
 
   return (
     <SafeAreaProvider>
@@ -34,7 +22,7 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      <Text>salam</Text>
+      <Text>Hello World</Text>
     </View>
   );
 }
