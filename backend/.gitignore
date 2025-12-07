@@ -2,7 +2,6 @@
 *.apk
 *.ap_
 *.aab
-
 # Files for the ART/Dalvik VM
 *.dex
 
@@ -146,4 +145,4 @@ captures/
 *.bak
 *~
 node_modules/
-.env
+.env/
