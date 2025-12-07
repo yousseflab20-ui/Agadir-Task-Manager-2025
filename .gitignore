@@ -145,3 +145,4 @@ captures/
 # Backup files
 *.bak
 *~
+node_modules/
