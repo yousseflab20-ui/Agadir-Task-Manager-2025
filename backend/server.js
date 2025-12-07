@@ -1,11 +1,22 @@
 import sequelize from "./src/config/DataBase.js";
-import { Task } from "./src/models/Task.model.js";
-import { User } from "./src/models/user.model.js";
-sequelize
-  .authenticate()
-  .then(() => console.log("PostgreSQL connected"))
-  .catch((err) => console.error("DB connection error:", err));
-sequelize
-  .sync({ alter: true })
-  .then(() => console.log("kolchi hoa hadal"))
-  .catch((err) => console.log("3ndk errer", err));
+import Task from "./src/models/TaskModel.js";
+import User from "./src/models/userModel.js";
+import express from "express";
+import authRoutes from "./src/routes/authRoutes.js";
+const app = express();
+app.use(express.json());
+app.use("/auth", authRoutes);
+const PORT = process.env.PORT || 2000;
+app.listen(PORT, async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("✅ Database connected successfully");
+    await sequelize.sync({ alter: true });
+    console.log("✅ Tables synced successfully");
+  } catch (err) {
+    console.log("❌ Database connection error:", err);
+  }
+
+  // 🔹 دابا PORT معرف، يمكن نستعملو
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
