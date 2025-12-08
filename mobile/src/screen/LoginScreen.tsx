@@ -10,15 +10,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LoginScreen({ navigation }: any) {
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleLogin = () => {
+        navigation.navigate("Dashboard");
+    };
 
     return (
         <SafeAreaView style={styles.container}>
-
-            {/* CENTERED CONTENT */}
             <View style={styles.centerContent}>
-
                 <Text style={styles.title}>Welcome Back!</Text>
-
                 <Text style={styles.subtitle}>
                     Log in to manage your tasks in Agadir.
                 </Text>
@@ -28,6 +30,8 @@ export default function LoginScreen({ navigation }: any) {
                         style={styles.input}
                         placeholder="Enter your email"
                         placeholderTextColor="#999"
+                        value={email}
+                        onChangeText={setEmail}
                     />
                 </View>
 
@@ -35,12 +39,17 @@ export default function LoginScreen({ navigation }: any) {
                     <TextInput
                         style={styles.input}
                         placeholder="Enter your password"
-                        secureTextEntry={!passwordVisible}
                         placeholderTextColor="#999"
+                        secureTextEntry={!passwordVisible}
+                        value={password}
+                        onChangeText={setPassword}
                     />
                     <TouchableOpacity
                         onPress={() => setPasswordVisible(!passwordVisible)}
                     >
+                        <Text style={{ color: "#0077B6", fontWeight: "bold" }}>
+                            {passwordVisible ? "Hide" : "Show"}
+                        </Text>
                     </TouchableOpacity>
                 </View>
 
@@ -54,9 +63,7 @@ export default function LoginScreen({ navigation }: any) {
                         <Text style={styles.footerLink}>Créer un compte</Text>
                     </TouchableOpacity>
                 </View>
-
             </View>
-
         </SafeAreaView>
     );
 }

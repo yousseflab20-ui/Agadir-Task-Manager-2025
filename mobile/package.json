@@ -10,10 +10,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native-community/datetimepicker": "^8.5.1",
     "@react-native/new-app-screen": "0.82.1",
     "@react-navigation/native": "^7.1.24",
     "@react-navigation/native-stack": "^7.8.5",
+    "axios": "^1.13.2",
     "lucide-react": "^0.556.0",
     "lucide-react-native": "^0.555.0",
     "react": "19.1.1",

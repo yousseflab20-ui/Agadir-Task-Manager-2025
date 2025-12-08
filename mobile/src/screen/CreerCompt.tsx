@@ -59,7 +59,7 @@ const SignupScreen = (props: any) => {
             <View style={styles.loginPrompt}>
                 <Text style={styles.promptText}>Vous avez déjà un compte? </Text>
                 <TouchableOpacity onPress={() => console.log('Se connecter clicked')}>
-                    <Text style={styles.loginLink} onPress={() => props.navigation.navigate("LoginScreen")}>Se connecter</Text>
+                    <Text style={styles.loginLink} onPress={() => props.navigation.navigate("TaskList")}>Se connecter</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

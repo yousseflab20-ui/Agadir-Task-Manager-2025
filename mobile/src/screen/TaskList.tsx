@@ -1,76 +1,101 @@
-import { useState } from "react";
-import { View, Text, StyleSheet, StatusBar, TouchableOpacity } from "react-native";
-import { List, Bell, Plus, Bold, BoldIcon } from 'lucide-react-native';
+import React, { useState } from "react";
+import {
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    FlatList,
+    Alert
+} from "react-native";
+import { Plus, Trash2, CheckCircle, Circle } from "lucide-react-native";
+import { useTasks } from "../context/TaskContext";
+import type { Task } from "../context/TaskContext";
 
-const TaskList = (props: any) => {
+const TaskList = ({ navigation }: any) => {
     const [activeTab, setActiveTab] = useState(1);
+    const { tasks, markDone, deleteTask } = useTasks();
 
-    const tabs = [
-        { id: 1, label: "Toutes" },
-        { id: 2, label: "En cours" },
-        { id: 3, label: "Terminées" },
-    ];
+    const filteredTasks = tasks.filter(task => {
+        if (activeTab === 2) return task.status === "pending";
+        if (activeTab === 3) return task.status === "done";
+        return true;
+    });
+
+    const renderTask = ({ item }: { item: Task }) => (
+        <View style={styles.taskCard}>
+            <TouchableOpacity
+                style={styles.taskLeft}
+                onPress={() => markDone(item.id)}
+            >
+                {item.status === "done" ? (
+                    <CheckCircle size={24} color="#4CAF50" />
+                ) : (
+                    <Circle size={24} color="#999" />
+                )}
+
+                <View>
+                    <Text
+                        style={[
+                            styles.taskTitle,
+                            item.status === "done" && styles.done
+                        ]}
+                    >
+                        {item.title}
+                    </Text>
+                    {item.description && (
+                        <Text style={styles.desc}>{item.description}</Text>
+                    )}
+                </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={() =>
+                    Alert.alert(
+                        "Confirmation",
+                        "T7yed had task?",
+                        [
+                            { text: "Non" },
+                            {
+                                text: "Oui",
+                                style: "destructive",
+                                onPress: () => deleteTask(item.id)
+                            },
+                        ]
+                    )
+                }
+            >
+                <Trash2 size={20} color="red" />
+            </TouchableOpacity>
+        </View>
+    );
 
     return (
-        <View style={styles.safeArea}>
-            {/* HEADER */}
-            <View style={styles.header}>
-                <TouchableOpacity style={styles.iconButton}>
-                    <List
-                        size={28}
-                        color={"#000"}
-                    />
-                </TouchableOpacity>
-
-                <Text style={styles.headerTitle}>Mes Tâches</Text>
-
-                <TouchableOpacity style={styles.iconButton}>
-                    <Bell color="#000" size={28} />
-                </TouchableOpacity>
+        <View style={styles.container}>
+            <View style={styles.tabs}>
+                {["Toutes", "En cours", "Terminées"].map((t, i) => (
+                    <TouchableOpacity
+                        key={i}
+                        style={[styles.tab, activeTab === i + 1 && styles.activeTab]}
+                        onPress={() => setActiveTab(i + 1)}
+                    >
+                        <Text>{t}</Text>
+                    </TouchableOpacity>
+                ))}
             </View>
 
-            {/* TABS */}
-            <View style={styles.tabsContainer}>
-                <View style={styles.tabsWrapper}>
-                    {tabs.map((tab) => (
-                        <TouchableOpacity
-                            key={tab.id}
-                            onPress={() => setActiveTab(tab.id)}
-                            style={[
-                                styles.tab,
-                                activeTab === tab.id && styles.activeTab
-                            ]}
-                        >
-                            <Text style={[
-                                styles.tabText,
-                                activeTab === tab.id && styles.activeTabText
-                            ]}>
-                                {tab.label}
-                            </Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-            </View>
+            <FlatList
+                data={filteredTasks}
+                keyExtractor={item => item.id.toString()}
+                renderItem={renderTask}
+                ListEmptyComponent={<Text style={styles.empty}>Aucune tâche</Text>}
+            />
 
-            {/* CONTENT */}
-            <View style={styles.content}>
-                <View style={styles.contentCard}>
-                    <Text style={styles.contentText}>
-                        Contenu de l'onglet{" "}
-                        <Text style={styles.contentBold}>
-                            {tabs.find((t) => t.id === activeTab)?.label}
-                        </Text>
-                    </Text>
-                    <Text style={styles.contentSubtext}>
-                        ID de l'onglet actif: {activeTab}
-                    </Text>
-                </View>
-            </View>
-            <View style={styles.containerIcone}>
-                <View style={styles.ContainerIcone}>
-                    <Plus size={40} color={"#fff"} onPress={() => (props.navigation.navigate("NewTask"))} />
-                </View>
-            </View>
+            <TouchableOpacity
+                style={styles.add}
+                onPress={() => navigation.navigate("NewTask")}
+            >
+                <Plus color="#fff" size={30} />
+            </TouchableOpacity>
         </View>
     );
 };
@@ -78,109 +103,29 @@ const TaskList = (props: any) => {
 export default TaskList;
 
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-        backgroundColor: "#F5F5F5",
-    },
-    header: {
+    container: { flex: 1, padding: 16 },
+    tabs: { flexDirection: "row", marginBottom: 10 },
+    tab: { flex: 1, padding: 10, alignItems: "center" },
+    activeTab: { backgroundColor: "#eee" },
+    taskCard: {
         flexDirection: "row",
-        alignItems: "center",
         justifyContent: "space-between",
-        paddingHorizontal: 16,
-        paddingVertical: 12,
+        padding: 15,
         backgroundColor: "#fff",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 3,
-        elevation: 2,
-        paddingTop: 30
-    },
-    iconButton: {
-        width: 40,
-        height: 40,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    headerTitle: {
-        fontSize: 18,
-        fontWeight: "700",
-        color: "#1a1a1a",
-    },
-    tabsContainer: {
-        backgroundColor: "#fff",
-        paddingHorizontal: 16,
-        paddingBottom: 16,
-    },
-    tabsWrapper: {
-        flexDirection: "row",
-        backgroundColor: "#F0F0F0",
+        marginBottom: 10,
         borderRadius: 10,
-        padding: 4,
     },
-    tab: {
-        flex: 1,
-        paddingVertical: 10,
-        paddingHorizontal: 12,
-        borderRadius: 8,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    activeTab: {
-        backgroundColor: "#fff",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 2,
-        elevation: 2,
-    },
-    tabText: {
-        fontSize: 14,
-        fontWeight: "500",
-        color: "#666",
-    },
-    activeTabText: {
-        color: "#006FBF",
-        fontWeight: "600",
-    },
-    content: {
-        flex: 1,
-        padding: 16,
-    },
-    contentCard: {
-        backgroundColor: "#fff",
-        borderRadius: 12,
-        padding: 24,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 3,
-        elevation: 2,
-    },
-    contentText: {
-        fontSize: 15,
-        color: "#666",
-    },
-    contentBold: {
-        fontWeight: "600",
-        color: "#333",
-    },
-    contentSubtext: {
-        fontSize: 13,
-        color: "#999",
-        marginTop: 8,
-    },
-    containerIcone: {
-        flex: 1,
-        justifyContent: "flex-end",
-        alignItems: "flex-end",
-        padding: 20,
-        marginBottom: 40
-    },
-    ContainerIcone: {
-        backgroundColor: "#2200ffff",
-        padding: 10,
-        borderRadius: 50,
+    taskLeft: { flexDirection: "row", gap: 10 },
+    taskTitle: { fontWeight: "600", fontSize: 16 },
+    done: { textDecorationLine: "line-through", color: "#999" },
+    desc: { color: "#666" },
+    empty: { textAlign: "center", marginTop: 50 },
+    add: {
+        position: "absolute",
+        bottom: 30,
+        right: 20,
+        backgroundColor: "#006FBF",
+        padding: 15,
+        borderRadius: 30,
     },
 });
