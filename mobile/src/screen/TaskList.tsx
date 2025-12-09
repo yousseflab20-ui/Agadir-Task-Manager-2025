@@ -23,7 +23,6 @@ const TaskList = ({ navigation }: any) => {
     const { tasks, markDone, deleteTask } = useTasks();
     const [activeTab, setActiveTab] = useState<TabType>("all");
 
-    // ✅ Filter tasks (optimized)
     const filteredTasks = useMemo(() => {
         if (activeTab === "pending")
             return tasks.filter(t => t.status === "pending");
@@ -83,7 +82,6 @@ const TaskList = ({ navigation }: any) => {
 
     return (
         <View style={styles.container}>
-            {/* ✅ Tabs */}
             <View style={styles.tabs}>
                 {TABS.map(tab => (
                     <TouchableOpacity
@@ -106,7 +104,6 @@ const TaskList = ({ navigation }: any) => {
                 ))}
             </View>
 
-            {/* ✅ List */}
             <FlatList
                 data={filteredTasks}
                 keyExtractor={item => item.id.toString()}
@@ -119,7 +116,6 @@ const TaskList = ({ navigation }: any) => {
                 }
             />
 
-            {/* ✅ Floating Button */}
             <TouchableOpacity
                 style={styles.fab}
                 onPress={() => navigation.navigate("NewTask")}
@@ -140,7 +136,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#f5f6fa",
     },
 
-    /* Tabs */
     tabs: {
         flexDirection: "row",
         backgroundColor: "#eaeaea",
@@ -165,7 +160,6 @@ const styles = StyleSheet.create({
         fontWeight: "700",
     },
 
-    /* Card */
     card: {
         flexDirection: "row",
         alignItems: "center",
@@ -197,7 +191,6 @@ const styles = StyleSheet.create({
         color: "#777",
     },
 
-    /* Empty */
     emptyContainer: {
         flexGrow: 1,
         justifyContent: "center",
@@ -208,7 +201,6 @@ const styles = StyleSheet.create({
         color: "#999",
     },
 
-    /* FAB */
     fab: {
         position: "absolute",
         bottom: 24,

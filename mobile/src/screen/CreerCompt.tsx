@@ -40,7 +40,6 @@ const SignupScreen = (props: any) => {
             const res = await api.post("/auth/register", { name, email, password });
             const { token, user } = res.data;
 
-            // Save token
             await tokenStorage.setToken(token);
 
             console.log("Registered user:", user, "Token:", token);

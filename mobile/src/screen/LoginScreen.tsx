@@ -35,7 +35,6 @@ export default function LoginScreen({ navigation }: any) {
             const res = await api.post("/auth/login", { email, password });
             const { token, user } = res.data;
 
-            // Save token
             await tokenStorage.setToken(token);
 
             console.log("Logged in user:", user, "Token:", token);

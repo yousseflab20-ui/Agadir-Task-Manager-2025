@@ -28,7 +28,6 @@ const NewTask = ({ navigation }: any) => {
             dueDate: new Date().toISOString(),
         });
 
-        // ✅ تنظيف الحقول
         setTitle("");
         setDescription("");
 

@@ -12,9 +12,7 @@ export const useAuth = () => {
 
             const res = await api.post("/auth/login", { email, password });
 
-            // Token + user
             const { token, user } = res.data;
-            // ممكن تخزن token ف AsyncStorage
             console.log("Logged in user:", user, "Token:", token);
             return { user, token };
         } catch (err: any) {
