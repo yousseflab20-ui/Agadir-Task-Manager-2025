@@ -5,11 +5,13 @@ import {
     TextInput,
     TouchableOpacity,
     StyleSheet,
-    Alert
+    Alert,
 } from "react-native";
-import { useTasks, Task } from "../context/TaskContext";
+import { useTasks } from "../context/TaskContext";
+
 const NewTask = ({ navigation }: any) => {
     const { createTask } = useTasks();
+
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
@@ -20,11 +22,15 @@ const NewTask = ({ navigation }: any) => {
         }
 
         createTask({
-            title,
-            description,
+            title: title.trim(),
+            description: description.trim(),
             status: "pending",
             dueDate: new Date().toISOString(),
         });
+
+        // ✅ تنظيف الحقول
+        setTitle("");
+        setDescription("");
 
         navigation.goBack();
     };
@@ -71,5 +77,9 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
     },
-    btnText: { color: "#fff", textAlign: "center", fontWeight: "bold" },
+    btnText: {
+        color: "#fff",
+        textAlign: "center",
+        fontWeight: "bold",
+    },
 });

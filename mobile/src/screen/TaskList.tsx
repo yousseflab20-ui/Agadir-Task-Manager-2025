@@ -1,100 +1,131 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
     View,
     Text,
     StyleSheet,
     TouchableOpacity,
     FlatList,
-    Alert
+    Alert,
 } from "react-native";
 import { Plus, Trash2, CheckCircle, Circle } from "lucide-react-native";
 import { useTasks } from "../context/TaskContext";
 import type { Task } from "../context/TaskContext";
 
-const TaskList = ({ navigation }: any) => {
-    const [activeTab, setActiveTab] = useState(1);
-    const { tasks, markDone, deleteTask } = useTasks();
+type TabType = "all" | "pending" | "done";
 
-    const filteredTasks = tasks.filter(task => {
-        if (activeTab === 2) return task.status === "pending";
-        if (activeTab === 3) return task.status === "done";
-        return true;
-    });
+const TABS: { key: TabType; label: string }[] = [
+    { key: "all", label: "Toutes" },
+    { key: "pending", label: "En cours" },
+    { key: "done", label: "Terminées" },
+];
+
+const TaskList = ({ navigation }: any) => {
+    const { tasks, markDone, deleteTask } = useTasks();
+    const [activeTab, setActiveTab] = useState<TabType>("all");
+
+    // ✅ Filter tasks (optimized)
+    const filteredTasks = useMemo(() => {
+        if (activeTab === "pending")
+            return tasks.filter(t => t.status === "pending");
+        if (activeTab === "done")
+            return tasks.filter(t => t.status === "done");
+        return tasks;
+    }, [tasks, activeTab]);
 
     const renderTask = ({ item }: { item: Task }) => (
-        <View style={styles.taskCard}>
+        <View style={styles.card}>
             <TouchableOpacity
-                style={styles.taskLeft}
+                style={styles.left}
                 onPress={() => markDone(item.id)}
+                activeOpacity={0.7}
             >
                 {item.status === "done" ? (
-                    <CheckCircle size={24} color="#4CAF50" />
+                    <CheckCircle size={26} color="#2ecc71" />
                 ) : (
-                    <Circle size={24} color="#999" />
+                    <Circle size={26} color="#b0b0b0" />
                 )}
 
-                <View>
+                <View style={{ flex: 1 }}>
                     <Text
                         style={[
-                            styles.taskTitle,
-                            item.status === "done" && styles.done
+                            styles.title,
+                            item.status === "done" && styles.done,
                         ]}
+                        numberOfLines={1}
                     >
                         {item.title}
                     </Text>
-                    {item.description && (
-                        <Text style={styles.desc}>{item.description}</Text>
+
+                    {!!item.description && (
+                        <Text style={styles.desc} numberOfLines={2}>
+                            {item.description}
+                        </Text>
                     )}
                 </View>
             </TouchableOpacity>
 
             <TouchableOpacity
                 onPress={() =>
-                    Alert.alert(
-                        "Confirmation",
-                        "T7yed had task?",
-                        [
-                            { text: "Non" },
-                            {
-                                text: "Oui",
-                                style: "destructive",
-                                onPress: () => deleteTask(item.id)
-                            },
-                        ]
-                    )
+                    Alert.alert("Confirmation", "T7yed had task?", [
+                        { text: "Non", style: "cancel" },
+                        {
+                            text: "Oui",
+                            style: "destructive",
+                            onPress: () => deleteTask(item.id),
+                        },
+                    ])
                 }
             >
-                <Trash2 size={20} color="red" />
+                <Trash2 size={20} color="#ff5252" />
             </TouchableOpacity>
         </View>
     );
 
     return (
         <View style={styles.container}>
+            {/* ✅ Tabs */}
             <View style={styles.tabs}>
-                {["Toutes", "En cours", "Terminées"].map((t, i) => (
+                {TABS.map(tab => (
                     <TouchableOpacity
-                        key={i}
-                        style={[styles.tab, activeTab === i + 1 && styles.activeTab]}
-                        onPress={() => setActiveTab(i + 1)}
+                        key={tab.key}
+                        style={[
+                            styles.tab,
+                            activeTab === tab.key && styles.activeTab,
+                        ]}
+                        onPress={() => setActiveTab(tab.key)}
                     >
-                        <Text>{t}</Text>
+                        <Text
+                            style={[
+                                styles.tabText,
+                                activeTab === tab.key && styles.activeTabText,
+                            ]}
+                        >
+                            {tab.label}
+                        </Text>
                     </TouchableOpacity>
                 ))}
             </View>
 
+            {/* ✅ List */}
             <FlatList
                 data={filteredTasks}
                 keyExtractor={item => item.id.toString()}
                 renderItem={renderTask}
-                ListEmptyComponent={<Text style={styles.empty}>Aucune tâche</Text>}
+                contentContainerStyle={
+                    filteredTasks.length === 0 && styles.emptyContainer
+                }
+                ListEmptyComponent={
+                    <Text style={styles.emptyText}>Aucune tâche 😴</Text>
+                }
             />
 
+            {/* ✅ Floating Button */}
             <TouchableOpacity
-                style={styles.add}
+                style={styles.fab}
                 onPress={() => navigation.navigate("NewTask")}
+                activeOpacity={0.9}
             >
-                <Plus color="#fff" size={30} />
+                <Plus size={28} color="#fff" />
             </TouchableOpacity>
         </View>
     );
@@ -103,29 +134,91 @@ const TaskList = ({ navigation }: any) => {
 export default TaskList;
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 16 },
-    tabs: { flexDirection: "row", marginBottom: 10 },
-    tab: { flex: 1, padding: 10, alignItems: "center" },
-    activeTab: { backgroundColor: "#eee" },
-    taskCard: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        padding: 15,
-        backgroundColor: "#fff",
-        marginBottom: 10,
-        borderRadius: 10,
+    container: {
+        flex: 1,
+        padding: 16,
+        backgroundColor: "#f5f6fa",
     },
-    taskLeft: { flexDirection: "row", gap: 10 },
-    taskTitle: { fontWeight: "600", fontSize: 16 },
-    done: { textDecorationLine: "line-through", color: "#999" },
-    desc: { color: "#666" },
-    empty: { textAlign: "center", marginTop: 50 },
-    add: {
-        position: "absolute",
-        bottom: 30,
-        right: 20,
+
+    /* Tabs */
+    tabs: {
+        flexDirection: "row",
+        backgroundColor: "#eaeaea",
+        borderRadius: 12,
+        marginBottom: 15,
+        overflow: "hidden",
+    },
+    tab: {
+        flex: 1,
+        paddingVertical: 10,
+        alignItems: "center",
+    },
+    activeTab: {
         backgroundColor: "#006FBF",
-        padding: 15,
-        borderRadius: 30,
+    },
+    tabText: {
+        color: "#555",
+        fontWeight: "500",
+    },
+    activeTabText: {
+        color: "#fff",
+        fontWeight: "700",
+    },
+
+    /* Card */
+    card: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backgroundColor: "#fff",
+        padding: 14,
+        borderRadius: 14,
+        marginBottom: 12,
+        elevation: 2,
+    },
+    left: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 12,
+        flex: 1,
+    },
+    title: {
+        fontSize: 16,
+        fontWeight: "600",
+        color: "#222",
+    },
+    done: {
+        textDecorationLine: "line-through",
+        color: "#999",
+    },
+    desc: {
+        marginTop: 2,
+        fontSize: 13,
+        color: "#777",
+    },
+
+    /* Empty */
+    emptyContainer: {
+        flexGrow: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    emptyText: {
+        fontSize: 16,
+        color: "#999",
+    },
+
+    /* FAB */
+    fab: {
+        position: "absolute",
+        bottom: 24,
+        right: 24,
+        backgroundColor: "#006FBF",
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        justifyContent: "center",
+        alignItems: "center",
+        elevation: 5,
     },
 });
