@@ -219,8 +219,8 @@ Agadir-Task-Manager-2025/
 
 ## 👨‍💻 TEAM
 
-| Name | Role | Links |
-|---|---|---|
+| Name                | Role           | Links                                                                                                             |
+| ------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------- |
 | **Youssef labnine** | Lead Developer | [LinkedIn](https://www.linkedin.com/in/youssef-labnine-313a47367/) / [GitHub](https://github.com/yousseflab20-ui) |
 
 ## 📄 LICENSE
@@ -229,10 +229,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 CONTACT
 
-| Type            | Contact Info                                                                     |
-| --------------- | -------------------------------------------------------------------------------- |
-| **Email Pro**   | carmarket.noreply8@gmail.com                                                     |
-| **Bug Reports** | [Open an Issue](https://github.com/yourusername/Agadir-Task-Manager-2025/issues) |
+| Type            | Contact Info                 |
+| --------------- | ---------------------------- |
+| **Email Pro**   | yousseflab20@gmail.com       |
+| **Bug Reports** | carmarket.noreply8@gmail.com |
 
 ## 📝 CHANGELOG
 
