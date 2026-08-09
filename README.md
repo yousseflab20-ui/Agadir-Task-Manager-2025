@@ -3,18 +3,18 @@
 # 🎯 Agadir Task Manager 2025
 
 <!-- Logo -->
-<img src="https://via.placeholder.com/150" alt="App Logo" width="150" height="150">
+<img src="mobile/src/assets/3d-badge.png" alt="App Logo" width="150" height="150">
 
 <!-- Badges -->
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)]()
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-green.svg)]()
-[![Stars](https://img.shields.io/github/stars/yourusername/Agadir-Task-Manager-2025.svg?style=social)]()
 
 <!-- Tech Stack -->
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![NodeJS](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
 
 </div>
 
@@ -40,14 +40,14 @@
 
 | Reason | Description |
 |---|---|
-| **Problem Solved** | Streamlines task management for teams in Agadir. |
-| **Efficiency** | Reduces time spent on planning by 30%. |
-| **Accessibility** | Available on Web and Mobile platforms. |
+| **Problem Solved** | Manage daily tasks effectively from your mobile device. |
+| **Simplicity** | Clean React Native UI with robust backend for fast interactions. |
+| **Accessibility** | Available natively on mobile (Android/iOS). |
 
 **Key Stats:**
-- 10+ Screens
-- 3 Languages Supported (English, French, Arabic)
-- Dark/Light Mode
+- 6 Mobile Screens (Home, Login, Register, Dashboard, Task List, New Task)
+- Full-stack TypeScript/JavaScript environment
+- Relational data structure with PostgreSQL
 
 ## 🎥 DEMO
 
@@ -56,138 +56,156 @@
 
 **Screenshots:**
 <div align="center">
-  <img src="https://via.placeholder.com/200x400" width="200" alt="Screen 1">
-  <img src="https://via.placeholder.com/200x400" width="200" alt="Screen 2">
-  <img src="https://via.placeholder.com/200x400" width="200" alt="Screen 3">
-  <img src="https://via.placeholder.com/200x400" width="200" alt="Screen 4">
+  <img src="https://via.placeholder.com/200x400" width="200" alt="Login Screen">
+  <img src="https://via.placeholder.com/200x400" width="200" alt="Dashboard">
+  <img src="https://via.placeholder.com/200x400" width="200" alt="Task List">
+  <img src="https://via.placeholder.com/200x400" width="200" alt="New Task">
 </div>
 
 ## 📋 DESCRIPTION
 
-Agadir Task Manager 2025 is a comprehensive tool designed to help local businesses and teams organize their daily workflows efficiently.
+Agadir Task Manager 2025 is a full-stack mobile application that allows users to register, log in securely, and manage their tasks. It features a React Native frontend and a Node.js/Express backend connected to a PostgreSQL database.
 
 **Objectives:**
-- Improve team collaboration.
-- Track project progress in real-time.
+- Provide a smooth mobile experience for task tracking.
+- Ensure secure user authentication and data persistence.
 
 **Target Audience:**
-- Project Managers
-- Freelancers
-- Small to Medium Businesses in Morocco
+- Individuals and professionals looking for a simple native mobile task manager.
 
-## 🏗️ ARCHITECTURE
+## 🏗️ Architecture
 
 **System Diagram:**
 ```mermaid
 graph TD;
-    Client-->API_Gateway;
-    API_Gateway-->Auth_Service;
-    API_Gateway-->Task_Service;
-    Task_Service-->Database;
+    Mobile_App["React Native App"]-->API["Express.js API Gateway"];
+    API-->Auth["Auth Controller"];
+    API-->Tasks["Task Controller"];
+    Auth-->DB[("PostgreSQL Database")];
+    Tasks-->DB;
 ```
 
 **Folder Structure:**
 ```text
 Agadir-Task-Manager-2025/
-├── client/
+├── backend/
 │   ├── src/
-│   ├── public/
-├── server/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
+│   │   ├── config/       # Database config
+│   │   ├── controllers/  # Auth & Task controllers
+│   │   ├── middlewares/  # JWT Authentication
+│   │   ├── models/       # Sequelize models (User, Task)
+│   │   ├── routes/       # API endpoints
+│   │   └── services/
+│   └── package.json
+├── mobile/
+│   ├── src/
+│   │   ├── api/          # Axios configuration
+│   │   ├── context/      # React Context (TaskContext)
+│   │   ├── hooks/        # Custom hooks (useAuth, useTasks)
+│   │   ├── screen/       # App screens (Dashboard, Login, etc.)
+│   │   └── utils/        # Token storage
+│   └── package.json
 └── README.md
 ```
 
 **Tech Stack:**
-- **Frontend:** React, Tailwind CSS
-- **Backend:** Node.js, Express
-- **Infrastructure:** Docker, AWS
+- **Frontend:** React Native (v0.82.1), TypeScript, React Navigation
+- **Backend:** Node.js, Express.js
+- **Database:** PostgreSQL with Sequelize ORM
 
 ## 📱 FEATURES
 
 - **User Authentication**
-  - Login/Register with JWT
-  - Social Auth (Google, GitHub)
+  - Registration and Login with JWT (JSON Web Tokens)
+  - Secure token storage using AsyncStorage
 - **Task Management**
-  - Create, Read, Update, Delete tasks
-  - Assign tasks to team members
-- **Real-time Notifications**
-  - Push notifications for deadlines
+  - List all user-specific tasks
+  - Create new tasks with title, description, and due date
+  - Update task details
+  - Mark tasks as 'done' or 'pending'
+  - Delete tasks
 
 ## 🗂️ DATABASE
 
-| Table | Key Fields |
-|---|---|
-| **Users** | `id`, `name`, `email`, `password_hash`, `role` |
-| **Tasks** | `id`, `title`, `description`, `status`, `assignee_id` |
-| **Projects**| `id`, `name`, `created_at`, `owner_id` |
+| Table | Key Fields | Description |
+|---|---|---|
+| **Users** | `id`, `name`, `email`, `password` | Stores user credentials and profile. Password is encrypted. |
+| **Tasks** | `id`, `title`, `description`, `status`, `due_date`, `user_id` | Stores task data. `status` is an ENUM ('pending', 'done'). `user_id` references Users table. |
 
 ## 🔐 SECURITY
 
 - [x] Password Hashing (Bcrypt)
-- [x] JWT Authentication
-- [x] Input Validation & Sanitization
-- [ ] Rate Limiting (À implémenter)
-- [ ] 2FA (À implémenter)
+- [x] JWT Authentication & Protected Routes Middleware
+- [x] CORS Enabled
+- [ ] Environment variables for secrets (`.env`)
 
 ## 📡 API
 
+### Auth Routes
 | Endpoint | Method | Description |
 |---|---|---|
-| `/api/users/login` | POST | Authenticate user |
-| `/api/tasks` | GET | Get all tasks |
-| `/api/tasks/:id` | PUT | Update task details |
+| `/register` | POST | Register a new user |
+| `/login` | POST | Authenticate user and return JWT |
+
+### Task Routes (Require Authentication)
+| Endpoint | Method | Description |
+|---|---|---|
+| `/tasks` | GET | Retrieve all tasks for the logged-in user |
+| `/tasks` | POST | Create a new task |
+| `/tasks/:id` | PUT | Update an existing task |
+| `/tasks/:id` | DELETE | Delete a specific task |
+| `/tasks/:id/done` | PATCH | Update task status to done/pending |
 
 ## 🚀 DEPLOYMENT
 
-- **Production:** [https://agadir-task-manager.com](https://agadir-task-manager.com)
-- **Play Store:** [Link to App](#)
-- **Scripts:**
-  - `npm run build`
-  - `npm run deploy`
+- **Frontend:** Can be built for Android/iOS via React Native CLI.
+- **Backend:** Node.js server starts via `node server.js`. 
 
 ## 📦 INSTALLATION
-
-> [!WARNING]
-> This project is currently proprietary. Ensure you have the necessary access rights before proceeding.
 
 **Steps:**
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/yourusername/Agadir-Task-Manager-2025.git
-   ```
-2. **Install dependencies:**
-   ```bash
    cd Agadir-Task-Manager-2025
-   npm install
    ```
-3. **Configure Environment:**
-   Copy `.env.example` to `.env` and fill in the values.
-4. **Run the app:**
+
+2. **Backend Setup:**
    ```bash
-   npm run dev
+   cd backend
+   npm install
+   # Configure your PostgreSQL connection in backend/src/config/DataBase.js or .env
+   npm run start\ Task # or node server.js
+   ```
+
+3. **Mobile Setup:**
+   ```bash
+   cd ../mobile
+   npm install
+   # Run on Android
+   npm run android
+   # Run on iOS (requires Mac)
+   npm run ios
    ```
 
 ## 🔧 TROUBLESHOOTING
 
 | Problem | Solution |
 |---|---|
-| Database connection failed | Check if MongoDB is running and your `.env` string is correct. |
-| Node modules error | Run `rm -rf node_modules package-lock.json` then `npm install` |
+| Database connection failed | Ensure PostgreSQL is running and credentials are correct. Check `backend/src/config/DataBase.js` |
+| Metro Bundler error | In `mobile/`, run `npm run start -- --reset-cache` |
 
 ## 🔄 ROADMAP
 
-- [ ] **Q3 2026:** AI-powered task suggestions.
-- [ ] **Q4 2026:** Advanced reporting dashboard.
-- [ ] **Q1 2027:** Desktop native applications.
+- [ ] Add Push Notifications.
+- [ ] Implement Dark Mode across all screens.
+- [ ] Add user profile editing.
 
 ## 👨‍💻 TEAM
 
 | Name | Role | Links |
 |---|---|---|
 | **Your Name** | Lead Developer | [LinkedIn](#) / [GitHub](#) |
-| **Team Member 2** | UI/UX Designer | [LinkedIn](#) / [GitHub](#) |
 
 ## 📄 LICENSE
 
@@ -197,21 +215,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 | Type | Contact Info |
 |---|---|
-| **Email Pro** | contact@agadir-task-manager.com |
 | **Bug Reports**| [Open an Issue](https://github.com/yourusername/Agadir-Task-Manager-2025/issues) |
-| **LinkedIn** | [Company Page](#) |
-
-**How to report a bug:**
-Please include the steps to reproduce, expected behavior, and your environment details.
 
 ## 📝 CHANGELOG
 
-- **v1.0.0:** Initial Release
-- **v1.1.0:** Added Dark Mode
-- **v1.2.0:** Performance improvements
-- **v1.3.0:** Arabic language support
+- **v0.0.1:** Initial Mobile and Backend Setup
 
 <div align="center">
   <br>
-  Made with ❤️ in Morocco by the Agadir Dev Team.
+  Made with ❤️ by the Agadir Dev Team.
 </div>
