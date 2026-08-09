@@ -6,11 +6,13 @@
 <img src="mobile/src/assets/3d-badge.png" alt="App Logo" width="150" height="150">
 
 <!-- Badges -->
+
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)]()
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-green.svg)]()
 
 <!-- Tech Stack -->
+
 ![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![NodeJS](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -19,6 +21,7 @@
 </div>
 
 ## 📑 TABLE OF CONTENTS
+
 - [✨ Why this project?](#-hook-why-this-project)
 - [🎥 Demo](#-demo)
 - [📋 Description](#-description)
@@ -38,13 +41,14 @@
 
 ## ✨ HOOK (Why this project?)
 
-| Reason | Description |
-|---|---|
-| **Problem Solved** | Manage daily tasks effectively from your mobile device. |
-| **Simplicity** | Clean React Native UI with robust backend for fast interactions. |
-| **Accessibility** | Available natively on mobile (Android/iOS). |
+| Reason             | Description                                                      |
+| ------------------ | ---------------------------------------------------------------- |
+| **Problem Solved** | Manage daily tasks effectively from your mobile device.          |
+| **Simplicity**     | Clean React Native UI with robust backend for fast interactions. |
+| **Accessibility**  | Available natively on mobile (Android/iOS).                      |
 
 **Key Stats:**
+
 - 6 Mobile Screens (Home, Login, Register, Dashboard, Task List, New Task)
 - Full-stack TypeScript/JavaScript environment
 - Relational data structure with PostgreSQL
@@ -52,9 +56,11 @@
 ## 🎥 DEMO
 
 <!-- Insert Video or GIF -->
+
 ![App Demo](https://via.placeholder.com/800x400.png?text=Demo+GIF+or+Video+Here)
 
 **Screenshots:**
+
 <div align="center">
   <img src="https://via.placeholder.com/200x400" width="200" alt="Login Screen">
   <img src="https://via.placeholder.com/200x400" width="200" alt="Dashboard">
@@ -67,15 +73,18 @@
 Agadir Task Manager 2025 is a full-stack mobile application that allows users to register, log in securely, and manage their tasks. It features a React Native frontend and a Node.js/Express backend connected to a PostgreSQL database.
 
 **Objectives:**
+
 - Provide a smooth mobile experience for task tracking.
 - Ensure secure user authentication and data persistence.
 
 **Target Audience:**
+
 - Individuals and professionals looking for a simple native mobile task manager.
 
 ## 🏗️ Architecture
 
 **System Diagram:**
+
 ```mermaid
 graph TD;
     Mobile_App["React Native App"]-->API["Express.js API Gateway"];
@@ -86,6 +95,7 @@ graph TD;
 ```
 
 **Folder Structure:**
+
 ```text
 Agadir-Task-Manager-2025/
 ├── backend/
@@ -109,6 +119,7 @@ Agadir-Task-Manager-2025/
 ```
 
 **Tech Stack:**
+
 - **Frontend:** React Native (v0.82.1), TypeScript, React Navigation
 - **Backend:** Node.js, Express.js
 - **Database:** PostgreSQL with Sequelize ORM
@@ -127,9 +138,9 @@ Agadir-Task-Manager-2025/
 
 ## 🗂️ DATABASE
 
-| Table | Key Fields | Description |
-|---|---|---|
-| **Users** | `id`, `name`, `email`, `password` | Stores user credentials and profile. Password is encrypted. |
+| Table     | Key Fields                                                    | Description                                                                                  |
+| --------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| **Users** | `id`, `name`, `email`, `password`                             | Stores user credentials and profile. Password is encrypted.                                  |
 | **Tasks** | `id`, `title`, `description`, `status`, `due_date`, `user_id` | Stores task data. `status` is an ENUM ('pending', 'done'). `user_id` references Users table. |
 
 ## 🔐 SECURITY
@@ -142,35 +153,40 @@ Agadir-Task-Manager-2025/
 ## 📡 API
 
 ### Auth Routes
-| Endpoint | Method | Description |
-|---|---|---|
-| `/register` | POST | Register a new user |
-| `/login` | POST | Authenticate user and return JWT |
+
+| Endpoint    | Method | Description                      |
+| ----------- | ------ | -------------------------------- |
+| `/register` | POST   | Register a new user              |
+| `/login`    | POST   | Authenticate user and return JWT |
 
 ### Task Routes (Require Authentication)
-| Endpoint | Method | Description |
-|---|---|---|
-| `/tasks` | GET | Retrieve all tasks for the logged-in user |
-| `/tasks` | POST | Create a new task |
-| `/tasks/:id` | PUT | Update an existing task |
-| `/tasks/:id` | DELETE | Delete a specific task |
-| `/tasks/:id/done` | PATCH | Update task status to done/pending |
+
+| Endpoint          | Method | Description                               |
+| ----------------- | ------ | ----------------------------------------- |
+| `/tasks`          | GET    | Retrieve all tasks for the logged-in user |
+| `/tasks`          | POST   | Create a new task                         |
+| `/tasks/:id`      | PUT    | Update an existing task                   |
+| `/tasks/:id`      | DELETE | Delete a specific task                    |
+| `/tasks/:id/done` | PATCH  | Update task status to done/pending        |
 
 ## 🚀 DEPLOYMENT
 
 - **Frontend:** Can be built for Android/iOS via React Native CLI.
-- **Backend:** Node.js server starts via `node server.js`. 
+- **Backend:** Node.js server starts via `node server.js`.
 
 ## 📦 INSTALLATION
 
 **Steps:**
+
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/yourusername/Agadir-Task-Manager-2025.git
    cd Agadir-Task-Manager-2025
    ```
 
 2. **Backend Setup:**
+
    ```bash
    cd backend
    npm install
@@ -190,10 +206,10 @@ Agadir-Task-Manager-2025/
 
 ## 🔧 TROUBLESHOOTING
 
-| Problem | Solution |
-|---|---|
+| Problem                    | Solution                                                                                         |
+| -------------------------- | ------------------------------------------------------------------------------------------------ |
 | Database connection failed | Ensure PostgreSQL is running and credentials are correct. Check `backend/src/config/DataBase.js` |
-| Metro Bundler error | In `mobile/`, run `npm run start -- --reset-cache` |
+| Metro Bundler error        | In `mobile/`, run `npm run start -- --reset-cache`                                               |
 
 ## 🔄 ROADMAP
 
@@ -205,7 +221,7 @@ Agadir-Task-Manager-2025/
 
 | Name | Role | Links |
 |---|---|---|
-| **Your Name** | Lead Developer | [LinkedIn](#) / [GitHub](#) |
+| **Youssef labnine** | Lead Developer | [LinkedIn](https://www.linkedin.com/in/youssef-labnine-313a47367/) / [GitHub](https://github.com/yousseflab20-ui) |
 
 ## 📄 LICENSE
 
@@ -213,9 +229,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 CONTACT
 
-| Type | Contact Info |
-|---|---|
-| **Bug Reports**| [Open an Issue](https://github.com/yourusername/Agadir-Task-Manager-2025/issues) |
+| Type            | Contact Info                                                                     |
+| --------------- | -------------------------------------------------------------------------------- |
+| **Bug Reports** | [Open an Issue](https://github.com/yourusername/Agadir-Task-Manager-2025/issues) |
 
 ## 📝 CHANGELOG
 
