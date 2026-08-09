@@ -231,6 +231,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 | Type            | Contact Info                                                                     |
 | --------------- | -------------------------------------------------------------------------------- |
+| **Email Pro**   | carmarket.noreply8@gmail.com                                                     |
 | **Bug Reports** | [Open an Issue](https://github.com/yourusername/Agadir-Task-Manager-2025/issues) |
 
 ## 📝 CHANGELOG
