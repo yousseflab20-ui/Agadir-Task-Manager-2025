@@ -83,7 +83,6 @@ const TaskList = ({ navigation }: any) => {
 
     return (
         <View style={styles.container}>
-            {/* ✅ Tabs */}
             <View style={styles.tabs}>
                 {TABS.map(tab => (
                     <TouchableOpacity
@@ -136,7 +135,7 @@ export default TaskList;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        padding: 40,
         backgroundColor: "#f5f6fa",
     },
 
@@ -197,7 +196,6 @@ const styles = StyleSheet.create({
         color: "#777",
     },
 
-    /* Empty */
     emptyContainer: {
         flexGrow: 1,
         justifyContent: "center",
@@ -208,7 +206,6 @@ const styles = StyleSheet.create({
         color: "#999",
     },
 
-    /* FAB */
     fab: {
         position: "absolute",
         bottom: 24,

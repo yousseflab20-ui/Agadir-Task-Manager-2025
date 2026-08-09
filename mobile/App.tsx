@@ -9,7 +9,7 @@ import TaskList from "./src/screen/TaskList";
 import NewTask from "./src/screen/NewTask";
 import { Dashboard } from "./src/screen/Dashboard";
 
-import { TaskProvider } from "./src/context/TaskContext"; // ✅ مهم
+import { TaskProvider } from "./src/context/TaskContext";
 
 const Stack = createNativeStackNavigator();
 

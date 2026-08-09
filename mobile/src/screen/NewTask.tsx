@@ -28,7 +28,6 @@ const NewTask = ({ navigation }: any) => {
             dueDate: new Date().toISOString(),
         });
 
-        // ✅ تنظيف الحقول
         setTitle("");
         setDescription("");
 
@@ -64,7 +63,7 @@ const NewTask = ({ navigation }: any) => {
 export default NewTask;
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 20 },
+    container: { flex: 1, padding: 20, justifyContent: "center", textAlign: "center" },
     title: { fontSize: 22, fontWeight: "bold", marginBottom: 20 },
     input: {
         backgroundColor: "#f2f2f2",

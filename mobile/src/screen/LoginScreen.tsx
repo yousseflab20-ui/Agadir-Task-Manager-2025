@@ -9,11 +9,13 @@ import {
     KeyboardAvoidingView,
     Platform,
     ScrollView,
+    Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Eye, EyeOff } from "lucide-react-native";
 import api from "../api/axios";
 import { tokenStorage } from "../utils/tokenStorage";
+import { CommonActions } from '@react-navigation/native';
 
 export default function LoginScreen({ navigation }: any) {
     const [email, setEmail] = useState("");
@@ -23,8 +25,14 @@ export default function LoginScreen({ navigation }: any) {
     const [loading, setLoading] = useState(false);
 
     const handleLogin = async () => {
+        // Validation
         if (!email || !password) {
             setError("Veuillez remplir tous les champs");
+            return;
+        }
+
+        if (!email.includes('@')) {
+            setError("Email invalide");
             return;
         }
 
@@ -32,16 +40,59 @@ export default function LoginScreen({ navigation }: any) {
             setLoading(true);
             setError("");
 
-            const res = await api.post("/auth/login", { email, password });
+            console.log("📤 Attempting login with:", email);
+
+            const res = await api.post("/auth/login", {
+                email: email.trim().toLowerCase(),
+                password
+            });
+
+            console.log("✅ Login successful");
+
+            // Check response
+            if (!res.data || !res.data.token) {
+                throw new Error("Invalid server response");
+            }
+
             const { token, user } = res.data;
 
-            // Save token
+            // Save token & user
             await tokenStorage.setToken(token);
+            await tokenStorage.setUser(user);
 
-            console.log("Logged in user:", user, "Token:", token);
-            navigation.replace("TaskList", { user });
+            console.log("✅ Token and user saved");
+
+            // ✅ FIXED: Use reset instead of replace to avoid navigation errors
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [
+                        {
+                            name: 'TaskList',
+                            params: { user }
+                        }
+                    ],
+                })
+            );
+
         } catch (err: any) {
-            setError(err.response?.data?.message || "Erreur de connexion");
+            console.error("❌ Login error:", err);
+
+            let errorMessage = "Erreur de connexion";
+
+            if (err.response) {
+                errorMessage = err.response.data?.message ||
+                    `Erreur ${err.response.status}`;
+                console.log("Server error:", errorMessage);
+            } else if (err.request) {
+                errorMessage = "Impossible de contacter le serveur. Vérifiez que le backend est démarré!";
+                console.log("🚨 Backend not responding!");
+            } else {
+                errorMessage = err.message;
+            }
+
+            setError(errorMessage);
+            Alert.alert("Erreur", errorMessage);
         } finally {
             setLoading(false);
         }
@@ -57,7 +108,7 @@ export default function LoginScreen({ navigation }: any) {
                     <View style={styles.centerContent}>
                         <Text style={styles.title}>Bienvenue!</Text>
                         <Text style={styles.subtitle}>
-                            Connectez-vous pour gérer vos tâches à Agadir
+                            Connectez-vous pour gérer vos tâches
                         </Text>
 
                         <View style={styles.form}>
@@ -65,7 +116,7 @@ export default function LoginScreen({ navigation }: any) {
                                 <Text style={styles.label}>Email</Text>
                                 <TextInput
                                     style={styles.input}
-                                    placeholder="Entrez votre email"
+                                    placeholder="exemple@email.com"
                                     placeholderTextColor="#999"
                                     keyboardType="email-address"
                                     autoCapitalize="none"
@@ -112,7 +163,10 @@ export default function LoginScreen({ navigation }: any) {
                                 disabled={loading}
                             >
                                 {loading ? (
-                                    <ActivityIndicator color="#fff" />
+                                    <View style={styles.loadingContainer}>
+                                        <ActivityIndicator color="#fff" />
+                                        <Text style={styles.loadingText}>Connexion...</Text>
+                                    </View>
                                 ) : (
                                     <Text style={styles.buttonText}>Se connecter</Text>
                                 )}
@@ -133,117 +187,27 @@ export default function LoginScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#FCF8F3",
-    },
-    keyboardView: {
-        flex: 1,
-    },
-    scrollContent: {
-        flexGrow: 1,
-    },
-    centerContent: {
-        flex: 1,
-        justifyContent: "center",
-        paddingHorizontal: 25,
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: "bold",
-        color: "#222",
-        textAlign: "center",
-        marginBottom: 8,
-    },
-    subtitle: {
-        textAlign: "center",
-        color: "#777",
-        fontSize: 15,
-        marginBottom: 40,
-    },
-    form: {
-        width: "100%",
-    },
-    inputGroup: {
-        marginBottom: 20,
-    },
-    label: {
-        fontSize: 14,
-        fontWeight: "600",
-        color: "#333",
-        marginBottom: 8,
-    },
-    input: {
-        height: 55,
-        backgroundColor: "white",
-        borderRadius: 12,
-        paddingHorizontal: 15,
-        fontSize: 15,
-        color: "#333",
-        elevation: 2,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 2,
-    },
-    passwordContainer: {
-        position: "relative",
-    },
-    passwordInput: {
-        paddingRight: 50,
-    },
-    eyeButton: {
-        position: "absolute",
-        right: 15,
-        top: 17,
-        padding: 5,
-    },
-    errorContainer: {
-        backgroundColor: "#FEE",
-        borderColor: "#FCC",
-        borderWidth: 1,
-        borderRadius: 8,
-        padding: 12,
-        marginBottom: 15,
-    },
-    errorText: {
-        color: "#C00",
-        fontSize: 13,
-        textAlign: "center",
-    },
-    button: {
-        backgroundColor: "#0077B6",
-        height: 55,
-        borderRadius: 12,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 10,
-        elevation: 3,
-        shadowColor: "#0077B6",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-    },
-    buttonDisabled: {
-        opacity: 0.6,
-    },
-    buttonText: {
-        color: "white",
-        fontWeight: "bold",
-        fontSize: 16,
-    },
-    footer: {
-        flexDirection: "row",
-        justifyContent: "center",
-        marginTop: 20,
-    },
-    footerText: {
-        color: "#777",
-        fontSize: 14,
-    },
-    footerLink: {
-        color: "#0077B6",
-        fontWeight: "bold",
-        fontSize: 14,
-    },
+    container: { flex: 1, backgroundColor: "#FCF8F3" },
+    keyboardView: { flex: 1 },
+    scrollContent: { flexGrow: 1 },
+    centerContent: { flex: 1, justifyContent: "center", paddingHorizontal: 25 },
+    title: { fontSize: 28, fontWeight: "bold", color: "#222", textAlign: "center", marginBottom: 8 },
+    subtitle: { textAlign: "center", color: "#777", fontSize: 15, marginBottom: 40 },
+    form: { width: "100%" },
+    inputGroup: { marginBottom: 20 },
+    label: { fontSize: 14, fontWeight: "600", color: "#333", marginBottom: 8 },
+    input: { height: 55, backgroundColor: "white", borderRadius: 12, paddingHorizontal: 15, fontSize: 15, color: "#333", elevation: 2 },
+    passwordContainer: { position: "relative" },
+    passwordInput: { paddingRight: 50 },
+    eyeButton: { position: "absolute", right: 15, top: 17, padding: 5 },
+    errorContainer: { backgroundColor: "#FEE", borderColor: "#FCC", borderWidth: 1, borderRadius: 8, padding: 12, marginBottom: 15 },
+    errorText: { color: "#C00", fontSize: 13, textAlign: "center" },
+    button: { backgroundColor: "#0077B6", height: 55, borderRadius: 12, justifyContent: "center", alignItems: "center", marginTop: 10, elevation: 3 },
+    buttonDisabled: { opacity: 0.6 },
+    buttonText: { color: "white", fontWeight: "bold", fontSize: 16 },
+    loadingContainer: { flexDirection: "row", alignItems: "center", gap: 10 },
+    loadingText: { color: "white", fontSize: 14 },
+    footer: { flexDirection: "row", justifyContent: "center", marginTop: 20 },
+    footerText: { color: "#777", fontSize: 14 },
+    footerLink: { color: "#0077B6", fontWeight: "bold", fontSize: 14 },
 });

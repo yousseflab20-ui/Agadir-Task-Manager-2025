@@ -171,7 +171,6 @@ export const Dashboard = () => {
                 />
             )}
 
-            {/* Modal l zid task */}
             <Modal
                 animationType="slide"
                 transparent={true}
