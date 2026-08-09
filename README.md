@@ -229,10 +229,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 CONTACT
 
-| Type            | Contact Info                 |
-| --------------- | ---------------------------- |
-| **Email Pro**   | yousseflab20@gmail.com       |
-| **Bug Reports** | carmarket.noreply8@gmail.com |
+| Type            | Contact Info           |
+| --------------- | ---------------------- |
+| **Email Pro**   | yousseflab20@gmail.com |
+| **Bug Reports** | yousseflab20@gmail.com |
 
 ## 📝 CHANGELOG
 
